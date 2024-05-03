@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exemplo de Requisição à API</title>
+</head>
+
+<body>
+    <h1>Exemplo de Requisição à API</h1>
+    <div id="data"></div>
+
+    <script>
+        // Função para fazer a requisição à API
+        function fetchData() {
+            // URL da API
+            const url = 'https://jsonplaceholder.typicode.com/posts/1';
+
+            // Fazendo a requisição usando o método fetch
+            fetch(url)
+                .then(response => {
+                    // Verifica se a resposta está OK
+                    if (!response.ok) {
+                        throw new Error('Erro ao obter os dados');
+                    }
+                    // Se estiver OK, retorna os dados em formato JSON
+                    return response.json();
+                })
+                .then(data => {
+                    // Renderiza os dados na tela
+                    const dataElement = document.getElementById('data');
+                    dataElement.innerHTML = `
+            <h2>Título: ${data.title}</h2>
+            <p>Conteúdo: ${data.body}</p>
+          `;
+                })
+                .catch(error => {
+                    // Em caso de erro, exibe uma mensagem de erro na tela
+                    const dataElement = document.getElementById('data');
+                    dataElement.innerHTML = `<p>${error.message}</p>`;
+                });
+        }
+
+        // Chama a função fetchData quando a página é carregada
+        window.onload = fetchData;
+    </script>
+</body>
+
+</html>
